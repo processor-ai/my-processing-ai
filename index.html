@@ -3,60 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AETHERNODE | Crypto Cards</title>
+    <title>AetherNode | Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #080808; color: white; font-family: 'Inter', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        .card-gradient { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); border: 1px solid rgba(255,255,255,0.1); }
-        .accent-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #09090b; color: #fafafa; margin: 0; overflow: hidden; }
+        .sidebar { width: 260px; background: #111114; border-right: 1px solid #27272a; height: 100vh; position: fixed; }
+        .main-content { margin-left: 260px; height: 100vh; overflow-y: auto; padding: 40px; }
+        .glass-card { background: rgba(24, 24, 27, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(63, 63, 70, 0.4); border-radius: 24px; padding: 24px; }
+        .nav-item { padding: 12px 20px; border-radius: 12px; cursor: pointer; transition: 0.3s; color: #a1a1aa; margin-bottom: 5px; }
+        .nav-item:hover, .nav-item.active { background: #27272a; color: #fff; }
+        .console-box { background: #000; border-radius: 16px; padding: 20px; font-family: monospace; font-size: 13px; height: 300px; overflow-y: auto; border: 1px solid #27272a; }
+        @media (max-width: 768px) { .sidebar { display: none; } .main-content { margin-left: 0; padding: 20px; } }
     </style>
 </head>
-<body class="p-4 md:p-8">
-    <div class="max-w-6xl mx-auto">
-        <header class="flex justify-between items-center mb-10">
-            <div class="flex items-center gap-2">
-                <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-xl accent-glow">AN</div>
-                <h1 class="text-2xl font-bold tracking-tighter text-white">AETHERNODE <span class="text-blue-500">CARDS</span></h1>
-            </div>
-            <div class="glass px-4 py-2 rounded-full text-sm font-medium border-blue-500/30">ID: 99284752</div>
-        </header>
+<body>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="lg:col-span-1 space-y-6">
-                <div class="card-gradient p-6 rounded-3xl relative overflow-hidden h-52 flex flex-col justify-between accent-glow">
-                    <div class="flex justify-between items-start">
-                        <span class="text-lg font-semibold italic">AETHERNODE</span>
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" class="h-4 opacity-80">
-                    </div>
+    <div class="sidebar p-6 flex flex-col">
+        <div class="text-2xl font-800 mb-10 flex items-center gap-2">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg"></div> AetherNode
+        </div>
+        <nav class="flex-1">
+            <div class="nav-item active" onclick="showPage('home')">🏠 Главная</div>
+            <div class="nav-item" onclick="showPage('cards')">💳 Мои карты</div>
+            <div class="nav-item" onclick="showPage('history')">🕒 История</div>
+            <div class="nav-item" onclick="showPage('settings')">⚙️ Настройки</div>
+        </nav>
+        <div class="text-xs text-gray-500 mt-auto">AetherNode Protocol v2.4</div>
+    </div>
+
+    <div class="main-content">
+        
+        <div id="page-home">
+            <h1 class="text-3xl font-800 mb-8">Добро пожаловать</h1>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="glass-card">
+                    <p class="text-gray-400 text-sm mb-1">Доступный баланс</p>
+                    <h2 class="text-4xl font-800">12.405 ETH</h2>
+                </div>
+                <div class="glass-card flex items-center justify-between">
                     <div>
-                        <p class="text-xs text-gray-400 mb-1">Virtual Card</p>
-                        <p class="text-xl tracking-widest font-mono">**** **** **** 4242</p>
+                        <p class="text-gray-400 text-sm">Статус системы</p>
+                        <p class="text-green-500 font-bold">ОНЛАЙН</p>
                     </div>
-                </div>
-
-                <div class="glass p-6 rounded-3xl">
-                    <p class="text-gray-400 text-sm mb-1">Total Balance</p>
-                    <h2 class="text-4xl font-bold mb-4">12.405 <span class="text-blue-500 text-2xl">ETH</span></h2>
-                    <button onclick="startTransaction()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl transition-all active:scale-95 accent-glow">
-                        TOP UP BALANCE
-                    </button>
+                    <div class="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center">🟢</div>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 space-y-6">
-                <div class="glass p-6 rounded-3xl">
-                    <h3 class="text-lg font-bold mb-4">System Console</h3>
-                    <div id="console" class="bg-black/50 p-4 rounded-xl h-64 overflow-y-auto font-mono text-sm space-y-2 border border-white/5">
-                        <p class="text-blue-400">> [SYSTEM] AetherNode Protocol v2.4 initialized...</p>
-                        <p class="text-green-400">> [READY] Secure gateway connected via Render.com</p>
-                    </div>
+            <div class="glass-card mb-8">
+                <h3 class="text-lg font-bold mb-4">Node Processor Logs</h3>
+                <div id="console" class="console-box space-y-2">
+                    <p class="text-blue-400">> [SYSTEM] Booting protocol...</p>
                 </div>
+                <button onclick="startTransaction()" class="w-full mt-6 bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-900/20 transition-all active:scale-95">
+                    ЗАПУСТИТЬ ТРАНЗАКЦИЮ
+                </button>
             </div>
         </div>
+
+        <div id="page-cards" class="hidden">
+            <h1 class="text-3xl font-800 mb-8">Мои карты</h1>
+            <div class="glass-card bg-gradient-to-br from-blue-900/40 to-black h-48 w-80 relative overflow-hidden">
+                <div class="absolute top-4 left-6 italic font-bold opacity-50">AETHERNODE</div>
+                <div class="absolute bottom-10 left-6 text-xl tracking-widest font-mono">**** **** **** 4242</div>
+                <div class="absolute bottom-4 left-6 text-xs text-gray-400 uppercase">Virtual Card</div>
+            </div>
+        </div>
+
     </div>
 
     <script>
+        // Функция переключения страниц
+        function showPage(pageId) {
+            document.getElementById('page-home').classList.add('hidden');
+            document.getElementById('page-cards').classList.add('hidden');
+            // Убираем активный класс у всех
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            // Показываем нужную
+            document.getElementById('page-' + pageId).classList.remove('hidden');
+            event.currentTarget.classList.add('active');
+        }
+
         function addLog(message, type) {
             const consoleBox = document.getElementById('console');
             const p = document.createElement('p');
@@ -73,7 +101,7 @@
         }
 
         async function startTransaction() {
-            addLog("Initializing secure payment session...", "pending");
+            addLog("Инициализация Stripe Gateway...", "pending");
             try {
                 const response = await fetch('/create-checkout-session', {
                     method: 'POST',
@@ -81,13 +109,13 @@
                 });
                 const session = await response.json();
                 if (session.url) {
-                    addLog("Stripe Gateway Ready. Redirecting...", "success");
+                    addLog("Сессия создана. Редирект...", "success");
                     setTimeout(() => { window.location.href = session.url; }, 1000);
                 } else {
-                    addLog("Gateway Error: Check API Keys", "error");
+                    addLog("Ошибка: проверьте логи Render", "error");
                 }
             } catch (err) {
-                addLog("Network Error: Render server unreachable", "error");
+                addLog("Network Error: Сервер не отвечает", "error");
             }
         }
     </script>
